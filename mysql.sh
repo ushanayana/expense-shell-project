@@ -8,25 +8,21 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-VALIDATE(){
-    if [ $1 -eq 0 ]
-    then 
-        echo -e "$G $2 is success.....$N"
-    else 
-        echo -e "$R $2 is Failure.....$N"
-        exit 1
-    fi        
-}
 
+VALIDATE(){
+   if [ $1 -ne 0 ]
+   then
+        echo -e "$2...$R FAILURE $N"
+        exit 1
+    else
+        echo -e "$2...$G SUCCESS $N"
+    fi
+}
 
 if [ $USERID -ne 0 ]
 then
-    echo -e "$Y you r not a super user $N"
-    exit 1
+    echo "Please run this script with root access."
+    exit 1 # manually exit if error comes.
 else
-    echo -e "$R you r super user $N"
-fi 
-
-dnf install mysql -y &>>LOGFILE
-VALIDATE $? "Installing mysql"
-
+    echo "You are super user."
+fi
